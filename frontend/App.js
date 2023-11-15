@@ -1,26 +1,84 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-export default function App() {
+const LogInPage = props => {
+
+  const onPress = () => {
+    props.navigation.navigate('SignUpPage');
+  };
+
   return (
     <View style={styles.container}>
-      <text>Monkey Business</text>
+      <Text>Monkey Business</Text>
       <form>
         <label>
-          User:
+          Username:
           <input type="text" name="user" />
         </label>
-          <label>
-              Password:
-              <input type="text" name="password" />
-          </label>
+        <label>
+            Password:
+            <input type="text" name="password" />
+        </label>
         <input type="submit" value="Submit" />
       </form>
-        <a>Sign Up</a>
+      <TouchableOpacity onPress={onPress}>
+        <button>Sign Up</button>
+      </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
   );
-}
+};
+
+const SignUpPage = props => {
+
+  const onPress = () => {
+    props.navigation.navigate('LogInPage');
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text>Monkey Business</Text>
+      <form>
+        <label>
+          Username:
+          <input type="text" name="user" />
+        </label>
+        <label>
+            Password:
+            <input type="text" name="password" />
+          </label>
+        <label>
+            Confirm Password:
+            <input type="text" name="password" />
+          </label>
+        <input type="submit" value="Submit" />
+      </form>
+      <TouchableOpacity onPress={onPress}>
+        <button>Log in</button>
+      </TouchableOpacity>
+      <StatusBar style="auto" />
+    </View>
+  );
+};
+
+const App = () => {
+  //const
+  const Stack = createStackNavigator();
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="LogInPage" component={LogInPage} options={{ headerShown: false }}/>
+        <Stack.Screen name="SignUpPage" component={SignUpPage} options={{ headerShown: false }}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
 
 const styles = StyleSheet.create({
 
