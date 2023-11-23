@@ -22,14 +22,14 @@ const LogInPage = () => {
           <Text>Password:</Text>
           <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry={true} />
         </View>
-        <TouchableOpacity>
-          <View style={styles.button}>
-            <Text>Log In</Text>
+        <TouchableOpacity style={styles.BigButton}>
+          <View>
+            <Text style={{color: '#FAF1E4'}}>Log In</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={onPress}>
-          <View style={styles.button}>
-            <Text>Sign Up</Text>
+        <TouchableOpacity onPress={onPress} style={styles.button}>
+          <View>
+            <Text style={{color: '#FAF1E4'}}>Sign Up</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -50,7 +50,7 @@ const SignUpPage = () => {
       <View style={styles.form}>
         <View style={styles.label}>
           <Text>Username:</Text>
-          <TextInput style={styles.input} placeholder="Enter your username" />
+          <TextInput style={styles.input}  underlineColorAndroid="transparent" placeholder="Enter your username" />
         </View>
         <View style={styles.label}>
           <Text>Password:</Text>
@@ -60,14 +60,14 @@ const SignUpPage = () => {
           <Text>Confirm Password:</Text>
           <TextInput style={styles.input} placeholder="Confirm your password" secureTextEntry={true} />
         </View>
-        <TouchableOpacity>
-          <View style={styles.button}>
-            <Text>Sign Up</Text>
+        <TouchableOpacity style={styles.BigButton}>
+          <View>
+            <Text style={{color: '#FAF1E4'}}>Sign Up</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={onPress}>
-          <View style={styles.button}>
-            <Text>Log In</Text>
+        <TouchableOpacity onPress={onPress} style={styles.button}>
+          <View>
+            <Text style={{color: '#FAF1E4'}}>Log In</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -91,13 +91,16 @@ const App = () => {
 const styles = StyleSheet.create({
   label: {
     marginBottom: 10,
+    outlineWidth: 0,
+    borderWidth: 0,
   },
   input: {
     height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
+    borderColor: '',
+    borderBottomWidth: 1,
     marginBottom: 20,
     padding: 10,
+    outlineStyle: 'none',
   },
   form: {
     flex: 1,
@@ -106,15 +109,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    backgroundColor: 'lightblue',
+    backgroundColor: '#9EB384',
+    color: '#FAF1E4',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
+    margin: 5,
+    height: '5%',
+    width: '100%',
+    display: "flex",
+    alignItems: "center",
+    alignContent: "center",
+  },
+  BigButton: {
+    backgroundColor: '#435334',
+    color:'#FAF1E4',
+    padding: 10,
+    borderRadius: 10,
+    margin: 5,
+    height: '7.5%',
+    width: '100%',
+    display: "flex",
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center",
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FAF1E4',
     alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 
