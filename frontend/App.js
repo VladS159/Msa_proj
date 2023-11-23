@@ -1,99 +1,115 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const LogInPage = props => {
+const LogInPage = () => {
+  const navigation = useNavigation();
 
   const onPress = () => {
-    props.navigation.navigate('SignUpPage');
+    navigation.navigate('SignUpPage');
   };
 
   return (
     <View style={styles.container}>
       <Text>Monkey Business</Text>
-      <form>
-        <label>
-          Username:
-          <input type="text" name="user" />
-        </label>
-        <label>
-            Password:
-            <input type="text" name="password" />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-      <TouchableOpacity onPress={onPress}>
-        <button>Sign Up</button>
-      </TouchableOpacity>
-      <StatusBar style="auto" />
+      <View style={styles.form}>
+        <View style={styles.label}>
+          <Text>Username:</Text>
+          <TextInput style={styles.input} placeholder="Enter your username" />
+        </View>
+        <View style={styles.label}>
+          <Text>Password:</Text>
+          <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry={true} />
+        </View>
+        <TouchableOpacity>
+          <View style={styles.button}>
+            <Text>Log In</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
+          <View style={styles.button}>
+            <Text>Sign Up</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
-const SignUpPage = props => {
+const SignUpPage = () => {
+  const navigation = useNavigation();
 
   const onPress = () => {
-    props.navigation.navigate('LogInPage');
+    navigation.navigate('LogInPage');
   };
 
   return (
     <View style={styles.container}>
       <Text>Monkey Business</Text>
-      <form>
-        <label>
-          Username:
-          <input type="text" name="user" />
-        </label>
-        <label>
-            Password:
-            <input type="text" name="password" />
-          </label>
-        <label>
-            Confirm Password:
-            <input type="text" name="password" />
-          </label>
-        <input type="submit" value="Submit" />
-      </form>
-      <TouchableOpacity onPress={onPress}>
-        <button>Log in</button>
-      </TouchableOpacity>
-      <StatusBar style="auto" />
+      <View style={styles.form}>
+        <View style={styles.label}>
+          <Text>Username:</Text>
+          <TextInput style={styles.input} placeholder="Enter your username" />
+        </View>
+        <View style={styles.label}>
+          <Text>Password:</Text>
+          <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry={true} />
+        </View>
+        <View style={styles.label}>
+          <Text>Confirm Password:</Text>
+          <TextInput style={styles.input} placeholder="Confirm your password" secureTextEntry={true} />
+        </View>
+        <TouchableOpacity>
+          <View style={styles.button}>
+            <Text>Sign Up</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
+          <View style={styles.button}>
+            <Text>Log In</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const App = () => {
-  //const
   const Stack = createStackNavigator();
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="LogInPage" component={LogInPage} options={{ headerShown: false }}/>
-        <Stack.Screen name="SignUpPage" component={SignUpPage} options={{ headerShown: false }}/>
+        <Stack.Screen name="LogInPage" component={LogInPage} options={{ headerShown: false }} />
+        <Stack.Screen name="SignUpPage" component={SignUpPage} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-export default App;
-
 const styles = StyleSheet.create({
-
-    label: {
-        display: "inline-block",
-        width: "100%",
-    },
-
-    form: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-    },
-
+  label: {
+    marginBottom: 10,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 20,
+    padding: 10,
+  },
+  form: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    backgroundColor: 'lightblue',
+    padding: 10,
+    borderRadius: 5,
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -101,3 +117,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default App;
