@@ -1,20 +1,35 @@
 import React from 'react'
 import {View, Text, Image, StyleSheet, useWindowDimensions, TextInput} from 'react-native'
+import {Controller} from 'react-hook-form'
 
 
-const CustomInput = ({value, setValue, placeholder, secureTextEntry}) => {
+const CustomInput = ({control, name, rules = {}, placeholder, secureTextEntry}) => {
 
     const {height} = useWindowDimensions();
 
     return (
-        <View style={styles.container}>
-            <TextInput placeholder={placeholder}
-                       value={value}
-                       onChangeText={setValue}
-                       placeholderTextColor="#9EB384"
-                       secureTextEntry={secureTextEntry}
-                       style={styles.input}></TextInput>
-        </View>
+        <Controller
+            control = {control}
+            name = {name}
+            rules = {rules}
+            render = {({field: {value, onChange, onBlur}, fieldState: {error}}) => (
+                <>
+                    <View style={styles.container}>
+                        <TextInput
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            placeholder={placeholder}
+                            style={[styles.input, {borderColor: error ? 'red' : '#9EB384'}]}
+                            secureTextEntry={secureTextEntry}
+                        />
+                    </View>
+                    {error && (
+                        <Text style = {{color: 'red', alignSelf: 'center'}}>{error.message || 'Error'}</Text>
+                    )} 
+                </>
+            )}
+        />
     );
 };
 
