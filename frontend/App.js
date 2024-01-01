@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import BigButton from "./BigButton";
 
 const LogInPage = () => {
   const navigation = useNavigation();
@@ -60,11 +61,7 @@ const SignUpPage = () => {
           <Text>Confirm Password:</Text>
           <TextInput style={styles.input} placeholder="Confirm your password" secureTextEntry={true} />
         </View>
-        <TouchableOpacity style={styles.BigButton}>
-          <View>
-            <Text style={{color: '#FAF1E4'}}>Sign Up</Text>
-          </View>
-        </TouchableOpacity>
+        <BigButton myText='Sign Up'></BigButton>
         <TouchableOpacity onPress={onPress} style={styles.button}>
           <View>
             <Text style={{color: '#FAF1E4'}}>Log In</Text>
@@ -115,7 +112,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 5,
     height: '5%',
-    width: '100%',
+    //width: '100%',
     display: "flex",
     alignItems: "center",
     alignContent: "center",
@@ -127,9 +124,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 5,
     height: '7.5%',
-    width: '100%',
+    //width: '100%',
     display: "flex",
-    alignItems: "center",
+    //alignItems: "center",
     alignContent: "center",
     justifyContent: "center",
   },
