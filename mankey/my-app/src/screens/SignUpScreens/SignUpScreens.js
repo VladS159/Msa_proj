@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
-import {View, Text, Image, StyleSheet, useWindowDimensions} from 'react-native'
+import {View, Text, Image, StyleSheet, useWindowDimensions, Alert} from 'react-native'
 import Banana from '../../../assets/images/Banana.jpg'
 import CustomInput from "../../components/CustomInput";
 import CustomBigButton from "../../components/CustomBigButton";
 import CustomSmallButton from "../../components/CustomSmallButton/CustomSmallButton";
 import {useNavigation} from "@react-navigation/native";
 import {useForm} from 'react-hook-form';
+import axios from "axios";
 
 const email_regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
@@ -26,16 +27,29 @@ const SignUpScreens = () => {
 
     const navigation = useNavigation();
     const onSignInPress = () => {
-        console.warn('oN');
-
+        //console.warn('oN');
+        
         navigation.navigate("SignIn");
     };
 
     const onSignUpPress = (data) => {
-        console.log(data);
-        console.warn('oN');
+        //console.log(data);
+        //console.warn('oN');
 
-        navigation.navigate("SignUp");
+        const user = {
+            name:data.username,
+            email:data.email,
+            password:data.password,
+        }
+
+        axios.post("http://localhost:3000/SignUp", user).then((response) => {
+            console.log(response);
+            Alert.alert("Registration successful.", "You have been registered.");
+            navigation.navigate("SignIn");
+        }).catch((error) => {
+            Alert.alert("Registration failed.", "An error ocurred during registration.");
+            console.log("error", error);
+        });
     };
 
     const {height} = useWindowDimensions();
@@ -60,7 +74,7 @@ const SignUpScreens = () => {
                 control = {control}
                 rules = {{
                     required: 'Email field must not be empty.',
-                    patter: {value: email_regex, message: 'Invalid mail address format.'}}}>
+                    pattern: {value: email_regex, message: 'Invalid mail address format.'}}}>
             </CustomInput>
             <CustomInput
                 name = 'password'

@@ -1,11 +1,13 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {View, Text, Image, StyleSheet, useWindowDimensions, TextInput} from 'react-native'
 import Banana from '../../../assets/images/Banana.jpg'
 import CustomInput from "../../components/CustomInput";
 import CustomBigButton from "../../components/CustomBigButton";
 import CustomSmallButton from "../../components/CustomSmallButton/CustomSmallButton";
-import {useNavigation} from "@react-navigation/native";
-import {useForm, Controller} from 'react-hook-form'
+import {TabRouter, useNavigation} from "@react-navigation/native";
+import {useForm, Controller} from 'react-hook-form';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignInScreens = () => {
 
@@ -14,20 +16,53 @@ const SignInScreens = () => {
 
     const navigation = useNavigation();
     const {control, handleSubmit, formState: {errors}} = useForm({defaultValues: {
-        username: "",
+        email: "",
         password: ""
     }});
-
     console.log(errors);
 
-    const onSignInPress = (data) => {
-        console.log(data);
+    useEffect(() => {
+        const checkLoginStatus = async(userId) => {
+            try{
+                const token = await AsyncStorage.getItem("authToken");
+                console.log("Retrieved token:", token);
+                if(token){
+                    navigation.replace("Home");
+                    console.log("we are in.");
+                }
+            } catch(error) {
+                console.log(error);
+            }
+        };
+        checkLoginStatus();
+    }, []);
 
-        navigation.navigate("SignIn");
+    const onSignInPress = (data) => {
+        //console.log(data);
+
+        const user = {
+            email:data.email,
+            password:data.password
+        }
+
+        axios.post("http://localhost:3000/SignIn", user).then((response) => {
+            const token = response.data.token;
+            // const { userId, token } = response.data;
+            
+            console.log("Retrieved token: axis: ", token);
+            // console.log('Retrieved id: authToken_${userId}');
+
+            AsyncStorage.setItem("authToken", token);
+
+            console.log("are we in?");
+            navigation.replace("Home");
+        });
+
+        //navigation.navigate("SignIn");
     };
 
     const onSignUpPress = () => {
-        console.warn('oN');
+        //console.warn('oN');
 
         navigation.navigate("SignUp");
     };
@@ -40,17 +75,18 @@ const SignInScreens = () => {
             {//<Image source={Banana} style={[styles.logo, {height: height * 0.3 }]} resizeMode={'contain'}/>}
             }
             <CustomInput
-                name = "username" 
-                placeholder = 'Username'
+                name = 'email'
+                placeholder = 'Email'
                 control = {control}
-                rules = {{required: 'Username field must not be empty.'}}>
+                rules = {{
+                    required: 'Email field must not be empty.'}}>
             </CustomInput>
             <CustomInput
                 name = "password" 
                 placeholder = 'Password'
                 secureTextEntry
                 control = {control}
-                rules = {{required: 'Password field must not be empty.', minLength: {value: 6, message: 'Password should be at least 6 characters long.'}}}>
+                rules = {{required: 'Password field must not be empty.'}}>
             </CustomInput>
             <CustomBigButton currentText={"Log in"} onPress={handleSubmit(onSignInPress)}></CustomBigButton>
             <CustomSmallButton currentText={"Sign Up"} onPress={onSignUpPress}></CustomSmallButton>
