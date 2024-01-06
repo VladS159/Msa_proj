@@ -59,45 +59,49 @@ const SignUpScreens = () => {
             <Text>Monke Business</Text>
             {//<Image source={Banana} style={[styles.logo, {height: height * 0.3 }]} resizeMode={'contain'}/>}
             }
-            <CustomInput
-                name = 'username'
-                placeholder = 'Username'
-                control = {control}
-                rules = {{
-                    required: 'Username field must not be empty.',
-                    minLength: {value:3, message: 'Username should be at least 3 characters long.'},
-                    maxLength :{value:15, message: 'Username should not exceed 15 charaters.'}}}>
-            </CustomInput>
-            <CustomInput
-                name = 'email'
-                placeholder = 'Email'
-                control = {control}
-                rules = {{
-                    required: 'Email field must not be empty.',
-                    pattern: {value: email_regex, message: 'Invalid mail address format.'}}}>
-            </CustomInput>
-            <CustomInput
-                name = 'password'
-                placeholder = 'Password'
-                secureTextEntry
-                control = {control}
-                rules = {{
-                    required: 'Password field must not be empty.',
-                    minLength: {value:6, message: 'Password should be at least 6 characters long.'}}}>
-            </CustomInput>
-            <CustomInput
-                name = 'password_repeat'
-                placeholder = 'PasswordRepeat'
-                secureTextEntry
-                control = {control}
-                rules = {{
-                    required: 'Password field must not be empty.',
-                    validate: value =>
-                        value === password || 'Passwords do not match.'
-                }}>
-            </CustomInput>
-            <CustomBigButton currentText={"Sign Up"} onPress={handleSubmit(onSignUpPress)}></CustomBigButton>
-            <CustomSmallButton currentText={"Log in"} onPress={onSignInPress}></CustomSmallButton>
+            <View style={styles.inputWrapper}>
+                <CustomInput
+                    name = 'username'
+                    placeholder = 'Username'
+                    control = {control}
+                    rules = {{
+                        required: 'Username field must not be empty.',
+                        minLength: {value:3, message: 'Username should be at least 3 characters long.'},
+                        maxLength :{value:15, message: 'Username should not exceed 15 charaters.'}}}>
+                </CustomInput>
+                <CustomInput
+                    name = 'email'
+                    placeholder = 'Email'
+                    control = {control}
+                    rules = {{
+                        required: 'Email field must not be empty.',
+                        pattern: {value: email_regex, message: 'Invalid mail address format.'}}}>
+                </CustomInput>
+                <CustomInput
+                    name = 'password'
+                    placeholder = 'Password'
+                    secureTextEntry
+                    control = {control}
+                    rules = {{
+                        required: 'Password field must not be empty.',
+                        minLength: {value:6, message: 'Password should be at least 6 characters long.'}}}>
+                </CustomInput>
+                <CustomInput
+                    name = 'password_repeat'
+                    placeholder = 'PasswordRepeat'
+                    secureTextEntry
+                    control = {control}
+                    rules = {{
+                        required: 'Password field must not be empty.',
+                        validate: value =>
+                            value === password || 'Passwords do not match.'
+                    }}>
+                </CustomInput>
+            </View>
+            <View style={styles.buttonWrapper}>
+                <CustomBigButton currentText={"Sign Up"} onPress={handleSubmit(onSignUpPress)}></CustomBigButton>
+                <CustomSmallButton currentText={"Log in"} onPress={onSignInPress}></CustomSmallButton>
+            </View>
         </View>
     );
 };
@@ -112,12 +116,24 @@ const styles = StyleSheet.create (
         root: {
             flex: 1,
             display: "flex",
+            justifyContent: 'space-between',
             width: "100%",
             alignItems: 'center',
             padding: 20,
             // borderStyle: "solid",
             // borderColor: "red",
             // borderWidth: 4,
+        },
+        inputWrapper: {
+            width: "100%",
+            paddingLeft: 20,
+            paddingRight: 20,
+        },
+        buttonWrapper: {
+            width: "100%",
+            paddingLeft: 20,
+            paddingRight: 20,
+            paddingBottom: 20,
         },
     }
 )

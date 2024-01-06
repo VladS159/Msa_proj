@@ -74,22 +74,26 @@ const SignInScreens = () => {
             <Text>Monkei Business</Text>
             {//<Image source={Banana} style={[styles.logo, {height: height * 0.3 }]} resizeMode={'contain'}/>}
             }
-            <CustomInput
-                name = 'email'
-                placeholder = 'Email'
-                control = {control}
-                rules = {{
-                    required: 'Email field must not be empty.'}}>
-            </CustomInput>
-            <CustomInput
-                name = "password" 
-                placeholder = 'Password'
-                secureTextEntry
-                control = {control}
-                rules = {{required: 'Password field must not be empty.'}}>
-            </CustomInput>
-            <CustomBigButton currentText={"Log in"} onPress={handleSubmit(onSignInPress)}></CustomBigButton>
-            <CustomSmallButton currentText={"Sign Up"} onPress={onSignUpPress}></CustomSmallButton>
+            <View style={styles.inputWrapper}>
+                <CustomInput
+                    name = 'email'
+                    placeholder = 'Email'
+                    control = {control}
+                    rules = {{
+                        required: 'Email field must not be empty.'}}>
+                </CustomInput>
+                <CustomInput
+                    name = "password"
+                    placeholder = 'Password'
+                    secureTextEntry
+                    control = {control}
+                    rules = {{required: 'Password field must not be empty.'}}>
+                </CustomInput>
+            </View>
+            <View style={styles.buttonWrapper}>
+                <CustomBigButton currentText={"Log in"} onPress={handleSubmit(onSignInPress)}></CustomBigButton>
+                <CustomSmallButton currentText={"Sign Up"} onPress={onSignUpPress}></CustomSmallButton>
+            </View>
         </View>
     );
 };
@@ -103,13 +107,24 @@ const styles = StyleSheet.create (
         },
         root: {
             flex: 1,
+            justifyContent: 'space-between',
             display: "flex",
             width: "100%",
             alignItems: 'center',
-            padding: 20,
             // borderStyle: "solid",
             // borderColor: "red",
             // borderWidth: 4,
+        },
+        inputWrapper: {
+            width: "100%",
+            paddingLeft: 20,
+            paddingRight: 20,
+        },
+        buttonWrapper: {
+            width: "100%",
+            paddingLeft: 20,
+            paddingRight: 20,
+            paddingBottom: 20,
         },
     }
 )

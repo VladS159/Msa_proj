@@ -8,7 +8,7 @@ import {TabRouter, useNavigation} from "@react-navigation/native";
 import {useForm, Controller} from 'react-hook-form';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import CustomTabs from "../../components/CustomTabs/CustomTabs";
 
 const HomeScreens = () => {
 
@@ -22,8 +22,9 @@ const HomeScreens = () => {
     
 return (
     <View style={styles.root}>
-        <Text>Home sweet home</Text>
+        <Text style={{fontFamily: 'DM Serif Display Regular'}}>Home sweet home</Text>
         <CustomBigButton currentText={"Log out"} onPress={onLogOutPress}></CustomBigButton>
+        <CustomTabs></CustomTabs>
     </View>
 );
 };
@@ -37,10 +38,11 @@ const styles = StyleSheet.create (
     },
     root: {
         flex: 1,
+        justifyContent: 'space-between',
         display: "flex",
         width: "100%",
         alignItems: 'center',
-        padding: 20,
+        alignContent: "center",
         // borderStyle: "solid",
         // borderColor: "red",
         // borderWidth: 4,
