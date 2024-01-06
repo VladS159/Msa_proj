@@ -11,20 +11,20 @@ const CustomTabs = ({currentText, onPress}) => {
     return (
         <View style={styles.container}>
             <Pressable style={styles.tab}>
-                <Ionicons name="home-outline" size={24} color="black" style={styles.icon}/>
-                <Text>Home</Text>
+                <Ionicons name="home-outline" size={24} color="#FAF1E4" style={styles.icon}/>
+                <Text style={styles.text}>Home</Text>
             </Pressable>
             <Pressable style={styles.tab}>
-                <AntDesign name="pluscircleo" size={24} color="black" style={styles.icon}/>
-                <Text>Add Task</Text>
+                <AntDesign name="pluscircleo" size={24} color="#FAF1E4" style={styles.icon}/>
+                <Text style={styles.text}>Add Task</Text>
             </Pressable>
             <Pressable style={styles.tab}>
-                <MaterialCommunityIcons name="calendar-blank-multiple" size={24} color="black" style={styles.icon}/>
-                <Text>Calendar</Text>
+                <MaterialCommunityIcons name="calendar-blank-multiple" size={24} color="#FAF1E4" style={styles.icon}/>
+                <Text style={styles.text}>Calendar</Text>
             </Pressable>
             <Pressable style={styles.tab}>
-                <Ionicons name="stats-chart" size={24} color="black" style={styles.icon}/>
-                <Text>Profile</Text>
+                <Ionicons name="stats-chart" size={24} color="#FAF1E4" style={styles.icon}/>
+                <Text style={styles.text}>Profile</Text>
             </Pressable>
         </View>
     );
@@ -43,7 +43,7 @@ const styles = StyleSheet.create (
             padding: 10,
         },
         text: {
-            color: '#1E1E1E',
+            color: '#FAF1E4',
         },
         tab: {
             display: "flex",
