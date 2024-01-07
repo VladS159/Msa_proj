@@ -25,10 +25,11 @@ const SignInScreens = () => {
         const checkLoginStatus = async(userId) => {
             try{
                 const token = await AsyncStorage.getItem("authToken");
+                console.log("ajugem aici?..");
                 console.log("Retrieved token:", token);
                 if(token){
-                    navigation.replace("Home");
                     console.log("we are in.");
+                    navigation.replace("Home");
                 }
             } catch(error) {
                 console.log(error);
@@ -46,13 +47,15 @@ const SignInScreens = () => {
         }
 
         axios.post("http://192.168.1.3:3000/SignIn", user).then((response) => {
-            const token = response.data.token;
+            const {userId, token} = response.data;
             // const { userId, token } = response.data;
             
-            console.log("Retrieved token: axis: ", token);
-            // console.log('Retrieved id: authToken_${userId}');
+            // console.log("Retrieved token: axis: ", token);
+            // // console.log('Retrieved id: authToken_${userId}');
+            // console.log("this is my userId:", userId);
 
             AsyncStorage.setItem("authToken", token);
+            AsyncStorage.setItem("userId", userId);
 
             console.log("are we in?");
             navigation.replace("Home");

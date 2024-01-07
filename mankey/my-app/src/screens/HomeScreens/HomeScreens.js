@@ -13,12 +13,68 @@ import CustomTabs from "../../components/CustomTabs/CustomTabs";
 const HomeScreens = () => {
 
     const navigation = useNavigation();
+    const [tasks, setTasks] = useState([]);
+    const [inProgressTasks, setInProgressTasks] = useState([]);
+    const [completedTasks, setCompletedTasks] = useState([]);
+    const [marked, setMarked] = useState(false);
 
     const onLogOutPress = () => {
         AsyncStorage.removeItem('authToken');
         navigation.navigate("SignIn");
     };
     
+    useEffect(() => {
+        getUserTasks();
+    }, []);
+    
+    const getUserTasks = async() => {
+        try{
+            const userId = await AsyncStorage.getItem('userId');
+            
+            const myUrl = "http://192.168.1.3:3000/users/" + userId + "/tasks";
+            console.log("this is my url: "+myUrl);
+            
+            //console.log("log1");
+
+            const response = await axios.get(myUrl);
+            //console.log("log2");
+            console.log(response.data.tasks);
+            setTasks(response.data.tasks);
+
+            //console.log("log3");
+
+            const fetchedTasks = response.data.tasks || [];
+            const inProgress = fetchedTasks.filter((task) => task.status !== "completed");
+            const completed = fetchedTasks.filter((task) => task.status === "completed");
+
+            //console.log("before printing the lists.");
+
+            setInProgressTasks(inProgress);
+            setCompletedTasks(completed);
+
+        } catch(error){
+            console.log("avem o problema?..");
+            console.log("error", error);
+        }
+    }
+
+const markTaskAsCompleted = async (taskId) => {
+    try{
+        setMarked(true);
+
+        const myUrl = "http://192.168.1.3:3000/tasks/" + taskId + "/complete";
+        console.log("this is my url: "+myUrl);
+
+        const response = await axios.patch(myUrl)
+        console.log(response.data);
+    } catch(error){
+        console.log("error",error);
+    }
+}
+
+console.log("completed", completedTasks);
+console.log("inProgress", inProgressTasks);
+
 return (
     <View style={styles.root}>
         <Text>Home sweet home</Text>

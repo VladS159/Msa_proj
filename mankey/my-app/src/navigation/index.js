@@ -14,10 +14,10 @@ const Navigation = () => {
     return (
         <NavigationContainer style={{margin: 0}}>
             <Stack.Navigator screenOptions={{headerShown: false}}>
-                <Stack.Screen name="Home" component={HomeScreens} style={{width: "500px"}}></Stack.Screen>
-                <Stack.Screen name="AddTask" component={AddTaskScreens} style={{width: "500px"}}></Stack.Screen>
                 <Stack.Screen name="SignIn" component={SignInScreens} style={{width: "500px"}}></Stack.Screen>
                 <Stack.Screen name="SignUp" component={SignUpScreens} style={{width: "500px"}}></Stack.Screen>
+                <Stack.Screen name="Home" component={HomeScreens} style={{width: "500px"}}></Stack.Screen>
+                <Stack.Screen name="AddTask" component={AddTaskScreens} style={{width: "500px"}}></Stack.Screen>
                 <Stack.Screen name="Profile" component={ProfileScreens} style={{width: "500px"}}></Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>

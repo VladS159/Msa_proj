@@ -1,20 +1,24 @@
 const mongoose = require("mongoose");
 
 const taskSchema = new mongoose.Schema({
-    title:{
+    addTask:{
         type:String,
         required:true,
     },
+    noOfBananas:{
+        type:String,
+        required:true,
+    },
+    // category:{
+    //     type:String,
+    //     required:true,
+    // },
     status:{
         type:String,
-        enum:["in the works", "done"],
-        default:"in the works"
+        enum:["inProgress","completed"],
+        default:"inProgress"
     },
-    category:{
-        type:String,
-        required:true,
-    },
-    dueDate:{
+    date:{
         type:String,
         required:true,
     },
