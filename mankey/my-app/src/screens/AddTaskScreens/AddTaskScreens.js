@@ -16,12 +16,6 @@ const AddTaskScreens = () => {
 
     const navigation = useNavigation();
     const [value, setValue] = useState(dayjs());
-
-    const onLogOutPress = () => {
-        //console.warn('oN');
-        AsyncStorage.removeItem('authToken');
-        navigation.navigate("SignIn");
-    };
     
 return (
     <View style={styles.root}>
@@ -53,7 +47,7 @@ return (
         />
         </View>
 
-        <CustomBigButton currentText={"Add Task"} onPress={console.log("Da")}></CustomBigButton>
+        <CustomBigButton currentText={"Add Task"} onPress={() => console.log("Da?Da.")}></CustomBigButton>
 
         <CustomTabs></CustomTabs>
     </View>

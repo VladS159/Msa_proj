@@ -21,7 +21,8 @@ const HomeScreens = () => {
     
 return (
     <View style={styles.root}>
-        <Text>Home sweet home</Text>
+        <Text style={{fontFamily: 'DM Serif Display Regular'}}>My profile</Text>
+        <CustomBigButton currentText={"Log out"} onPress={onLogOutPress}></CustomBigButton>
         <CustomTabs></CustomTabs>
     </View>
 );
