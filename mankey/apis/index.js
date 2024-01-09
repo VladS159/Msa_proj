@@ -168,7 +168,8 @@ app.patch("/users/:userId/addBananas/:taskId", async(req,res) => {
 
     const updatedUser = await User.findByIdAndUpdate(
         userId,
-        { $inc: { noOfBananas: completedTask.noOfBananas } },
+        { $inc: { noOfBananas: completedTask.noOfBananas,
+                  completedTasks: 1 } },
         { new: true }
     );
     if (!updatedUser) {
@@ -181,7 +182,6 @@ app.patch("/users/:userId/addBananas/:taskId", async(req,res) => {
 app.delete("/tasks/:taskId/delete", async(req,res) => {
     try{
         const taskId = req.params.taskId;
-        const userId = req.params.userId;
         const deletedTask = await Task.findByIdAndDelete(taskId)
 
         if(!deletedTask)
@@ -191,5 +191,41 @@ app.delete("/tasks/:taskId/delete", async(req,res) => {
         res.status(200).json({message:"Task completed."});
     } catch(error){
         res.status(500).json({error:"Something went wrong."});
+    }
+});
+
+app.get("/users/:userId", async(req,res) => {
+    try{
+        const userId = req.params.userId;
+        const user = await User.findById(userId);
+
+        if(!user)
+        {
+            res.status(404).json({error:"User not found."});
+        }
+        res.status(200).json(user);
+    } catch(error){
+        res.status(500).json({error:"Something went wrong."});
+    }
+});
+
+app.patch("/users/:userId/deleteCurrentInfo", async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        // Remove the task from the user's tasks array
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $set: { completedTasks: 0 } },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ error: "User not found." });
+        }
+
+        res.status(200).json({ message: "Completed tasks set to 0." });
+    } catch (error) {
+        res.status(500).json({ error: "Something went wrong." });
     }
 });
