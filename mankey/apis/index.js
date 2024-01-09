@@ -133,18 +133,63 @@ app.get("/users/:userId/tasks", async(req,res) => {
     }
 });
 
-app.patch("/tasks/:taskId/complete", async(req,res) => {
+app.patch("/users/:userId/removeTask/:taskId", async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const taskId = req.params.taskId;
+
+        // Remove the task from the user's tasks array
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $pull: { tasks: taskId } },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ error: "User not found." });
+        }
+
+        res.status(200).json({ message: "Task removed from user's tasks." });
+    } catch (error) {
+        res.status(500).json({ error: "Something went wrong." });
+    }
+});
+
+app.patch("/users/:userId/addBananas/:taskId", async(req,res) => {
+    const taskId = req.params.taskId;
+    const userId = req.params.userId;
+
+    const completedTask = await Task.findById(taskId);
+    if (!completedTask) {
+        return res.status(404).json({ error: "Task not found." });
+    }
+
+    console.log(completedTask);
+
+    const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { $inc: { noOfBananas: completedTask.noOfBananas } },
+        { new: true }
+    );
+    if (!updatedUser) {
+        return res.status(404).json({ error: "User not found." });
+    }
+
+    res.status(200).json({ message: "Bananas added to the user." });
+});
+
+app.delete("/tasks/:taskId/delete", async(req,res) => {
     try{
         const taskId = req.params.taskId;
-        const updatedTask = await Task.findByIdAndUpdate(taskId, {status:"completed"}, {new:true});
+        const userId = req.params.userId;
+        const deletedTask = await Task.findByIdAndDelete(taskId)
 
-        if(!updatedTask)
+        if(!deletedTask)
         {
             res.status(404).json({error:"Task not found."});
         }
-
-        res.status(200).json({message:"Task completed.", task:updatedTask});
+        res.status(200).json({message:"Task completed."});
     } catch(error){
         res.status(500).json({error:"Something went wrong."});
     }
-})
+});
