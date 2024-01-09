@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomTabs from "../../components/CustomTabs/CustomTabs";
 import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
+import HomeScreens from '../HomeScreens/HomeScreens';
 
 const AddTaskScreens = () => {
 
@@ -44,7 +45,8 @@ const AddTaskScreens = () => {
             console.log("error1", error);
         });
 
-        navigation.navigate("Home");
+        // navigation.navigate("Home");
+        // HomeScreens.getUserTasks();
         } catch(error){
             console.log("error2", error);
         }

@@ -1,1 +1,1 @@
-export { default } from './CustomBigButton';
+export { default } from './CustomTask';
