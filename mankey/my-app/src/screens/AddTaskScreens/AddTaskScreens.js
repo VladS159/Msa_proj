@@ -20,7 +20,7 @@ const AddTaskScreens = () => {
     const {control, handleSubmit, formState: {errors}} = useForm({defaultValues: {
         addTask: "",
         noOfBananas: "",
-        date: "",
+        date: dayjs(Date()).format("YYYY-MM-DD"),
     }});
     
     const addTask = async (data, userId) => {
@@ -112,6 +112,8 @@ return (
                             headerTextContainerStyle={{backgroundColor: '#9EB384'}}
                             headerButtonStyle={{backgroundColor: '#9EB384'}}
                             dayContainerStyle={{backgroundColor: '#9EB384'}}
+                            mode='date'
+                            selectedItemColor='#435334'
                             todayContainerStyle={{backgroundColor: '#9EB384'}}
                             monthContainerStyle={{backgroundColor: '#9EB384'}}
                         />
@@ -124,7 +126,9 @@ return (
         >
         </Controller>
 
-        <CustomBigButton currentText={"Add Task"} onPress={handleSubmit(addTask)}></CustomBigButton>
+        <View style={styles.buttonWrapper}>
+            <CustomBigButton currentText={"Add Task"} onPress={handleSubmit(addTask)}></CustomBigButton>
+        </View>
 
         <CustomTabs></CustomTabs>
     </View>
@@ -148,6 +152,12 @@ const styles = StyleSheet.create (
         // borderStyle: "solid",
         // borderColor: "red",
         // borderWidth: 4,
+    },
+    buttonWrapper: {
+        width: "100%",
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 20,
     },
     input: {
         width: "50%",

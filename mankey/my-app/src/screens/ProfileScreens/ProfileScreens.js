@@ -22,7 +22,9 @@ const HomeScreens = () => {
 return (
     <View style={styles.root}>
         <Text style={{fontFamily: 'DM Serif Display Regular'}}>My profile</Text>
-        <CustomBigButton currentText={"Log out"} onPress={onLogOutPress}></CustomBigButton>
+        <View style={styles.buttonWrapper}>
+            <CustomBigButton currentText={"Log out"} onPress={onLogOutPress}></CustomBigButton>
+        </View>
         <CustomTabs></CustomTabs>
     </View>
 );
@@ -34,6 +36,12 @@ const styles = StyleSheet.create (
         width: 100,
         maxHeight: 100,
         maxWidth: 300,
+    },
+    buttonWrapper: {
+        width: "100%",
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 20,
     },
     root: {
         flex: 1,

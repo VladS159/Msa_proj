@@ -20,7 +20,7 @@ const CustomTabs = ({currentText, onPress}) => {
                 <AntDesign name="pluscircleo" size={24} color="#FAF1E4" style={styles.icon}/>
                 <Text style={styles.text}>Add Task</Text>
             </Pressable>
-            <Pressable style={styles.tab}>
+            <Pressable style={styles.tab} onPress={() => navigation.navigate('Calendar')}>
                 <MaterialCommunityIcons name="calendar-blank-multiple" size={24} color="#FAF1E4" style={styles.icon}/>
                 <Text style={styles.text}>Calendar</Text>
             </Pressable>

@@ -79,10 +79,12 @@ const HomeScreens = () => {
     return (
         <View style={styles.root}>
             <Text>Home sweet home</Text>
+            <ScrollView style={styles.scroll}>
             {inProgressTasks.map((task) => (
                 <CustomTask key={task._id} taskName={task.addTask} taskDate={task.date} onComplete={() => {
                     markTaskAsCompleted(task._id)}} onDelete={markTaskAsCompleted}></CustomTask>
             ))}
+            </ScrollView>
             <CustomTabs></CustomTabs>
         </View>
     );
@@ -94,6 +96,10 @@ const styles = StyleSheet.create (
         width: 100,
         maxHeight: 100,
         maxWidth: 300,
+    },
+    scroll: {
+        maxHeight: "75%",
+        width: "100%",
     },
     root: {
         flex: 1,

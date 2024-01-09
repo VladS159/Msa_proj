@@ -32,7 +32,6 @@ const styles = StyleSheet.create (
         container: {
             backgroundColor: '#9EB384',
             borderRadius: 20,
-            margin: 0,
             width: '75%',
             alignSelf: 'stretch',
             display: "flex",
@@ -45,6 +44,7 @@ const styles = StyleSheet.create (
             flexDirection: "row",
             gap: 10,
             width: "100%",
+            marginTop: 10,
             justifyContent: "center",
         },
         complete: {

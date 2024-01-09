@@ -7,6 +7,7 @@ import SignUpScreens from "../screens/SignUpScreens";
 import HomeScreens from '../screens/HomeScreens';
 import AddTaskScreens from '../screens/AddTaskScreens';
 import ProfileScreens from '../screens/ProfileScreens';
+import CalendarScreens from "../screens/CalendarScreens";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,7 @@ const Navigation = () => {
                 <Stack.Screen name="SignUp" component={SignUpScreens} style={{width: "500px"}}></Stack.Screen>
                 <Stack.Screen name="Home" component={HomeScreens} style={{width: "500px"}}></Stack.Screen>
                 <Stack.Screen name="AddTask" component={AddTaskScreens} style={{width: "500px"}}></Stack.Screen>
+                <Stack.Screen name="Calendar" component={CalendarScreens} style={{width: "500px"}}></Stack.Screen>
                 <Stack.Screen name="Profile" component={ProfileScreens} style={{width: "500px"}}></Stack.Screen>
             </Stack.Navigator>
         </NavigationContainer>
