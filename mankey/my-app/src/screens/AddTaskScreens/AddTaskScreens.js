@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import {View, Text, Image, StyleSheet, useWindowDimensions, TextInput} from 'react-native'
 import Banana from '../../../assets/images/Banana.jpg'
 import CustomInput from "../../components/CustomInput";
@@ -45,7 +45,8 @@ const AddTaskScreens = () => {
             console.log("error1", error);
         });
 
-        // navigation.navigate("Home");
+         navigation.navigate("Home");
+            navigation.navigate("AddTask");
         // HomeScreens.getUserTasks();
         } catch(error){
             console.log("error2", error);
