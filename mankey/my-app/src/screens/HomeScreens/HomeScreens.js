@@ -58,15 +58,29 @@ const HomeScreens = () => {
         }
     }
 
-    const markTaskAsCompleted = async (taskId) => {
+    const markTaskAsCompleted = async (taskId, flag) => {
         try{
-            setMarked(true);
+            console.log(flag);
 
-            const myUrl = "http://localhost:3000/tasks/" + taskId + "/complete";
+            const userId = await AsyncStorage.getItem('userId');
+            //setMarked(true);
+            const myUrl = "http://localhost:3000/tasks/" + taskId + "/delete";
+            const myUrl2 = "http://localhost:3000/users/" + userId + "/removeTask/" + taskId;
+
             console.log("this is my url: "+myUrl);
+            console.log("this is my url2: "+myUrl2);
 
-            const response = await axios.patch(myUrl)
+            if(flag){
+                const myUrl3 = "http://localhost:3000/users/" + userId + "/addBananas/" + taskId;
+                console.log("this is my url2: "+myUrl3);
+
+                const bananaResponse = await axios.patch(myUrl3);
+                console.log(bananaResponse.data);
+            }
+            const response = await axios.delete(myUrl)
             console.log(response.data);
+            const userResponse = await axios.patch(myUrl2);
+            console.log(userResponse.data);
             getUserTasks();
         } catch(error){
             console.log("error",error);
@@ -81,7 +95,7 @@ const HomeScreens = () => {
             <Text>Home sweet home</Text>
             {inProgressTasks.map((task) => (
                 <CustomTask key={task._id} taskName={task.addTask} taskDate={task.date} onComplete={() => {
-                    markTaskAsCompleted(task._id)}} onDelete={markTaskAsCompleted}></CustomTask>
+                    markTaskAsCompleted(task._id, true)}} onDelete={() => {markTaskAsCompleted(task._id, false)}}></CustomTask>
             ))}
             <CustomTabs></CustomTabs>
         </View>

@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
             ref:"Task"
         }
     ],
+    noOfBananas:{
+        type:Number,
+        default:0,
+    },
     createdAt:{
         type:Date,
         default:Date.now,
