@@ -31,7 +31,7 @@ const HomeScreens = () => {
         try{
             const userId = await AsyncStorage.getItem('userId');
             
-            const myUrl = "http://192.168.1.3:3000/users/" + userId + "/tasks";
+            const myUrl = "http://localhost:3000/users/" + userId + "/tasks";
             console.log("this is my url: "+myUrl);
             
             //console.log("log1");
@@ -62,11 +62,12 @@ const HomeScreens = () => {
         try{
             setMarked(true);
 
-            const myUrl = "http://192.168.1.3:3000/tasks/" + taskId + "/complete";
+            const myUrl = "http://localhost:3000/tasks/" + taskId + "/complete";
             console.log("this is my url: "+myUrl);
 
             const response = await axios.patch(myUrl)
             console.log(response.data);
+            getUserTasks();
         } catch(error){
             console.log("error",error);
         }
@@ -79,7 +80,8 @@ const HomeScreens = () => {
         <View style={styles.root}>
             <Text>Home sweet home</Text>
             {inProgressTasks.map((task) => (
-                <CustomTask key={task._id} taskName={task.addTask} taskDate={task.date}></CustomTask>
+                <CustomTask key={task._id} taskName={task.addTask} taskDate={task.date} onComplete={() => {
+                    markTaskAsCompleted(task._id)}} onDelete={markTaskAsCompleted}></CustomTask>
             ))}
             <CustomTabs></CustomTabs>
         </View>

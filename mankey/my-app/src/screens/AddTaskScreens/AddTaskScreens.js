@@ -37,7 +37,7 @@ const AddTaskScreens = () => {
 
         const userId = await AsyncStorage.getItem("userId");
         console.log(userId);
-        const myUrl = "http://192.168.1.3:3000/tasks/"+userId;  
+        const myUrl = "http://localhost:3000/tasks/"+userId;
 
         axios.post(myUrl, task).then((response) => {
             console.log(response);
