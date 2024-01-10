@@ -19,6 +19,7 @@ const SignInScreens = () => {
         email: "",
         password: ""
     }});
+    const [errorMessage, setErrorMessage] = useState(false);
     console.log(errors);
 
     useEffect(() => {
@@ -40,25 +41,34 @@ const SignInScreens = () => {
 
     const onSignInPress = (data) => {
         //console.log(data);
+            const user = {
+                email:data.email,
+                password:data.password
+            }
 
-        const user = {
-            email:data.email,
-            password:data.password
-        }
+            axios.post("http://192.168.1.3:3000/SignIn", user).then((response) => {
+                const {userId, token} = response.data;
+                // const { userId, token } = response.data;
+                
+                // console.log("Retrieved token: axis: ", token);
+                // // console.log('Retrieved id: authToken_${userId}');
+                // console.log("this is my userId:", userId);
 
-        axios.post("http://localhost:3000/SignIn", user).then((response) => {
-            const {userId, token} = response.data;
-            // const { userId, token } = response.data;
-            
-            // console.log("Retrieved token: axis: ", token);
-            // // console.log('Retrieved id: authToken_${userId}');
-            // console.log("this is my userId:", userId);
+                AsyncStorage.setItem("authToken", token);
+                AsyncStorage.setItem("userId", userId);
 
-            AsyncStorage.setItem("authToken", token);
-            AsyncStorage.setItem("userId", userId);
-
-            console.log("are we in?");
-            navigation.replace("Home");
+                console.log("are we in?");
+                navigation.replace("Home");
+            }).catch((error) =>{
+            if (error.response && error.response.status === 401) {
+                setErrorMessage("Inexisting account.");
+                setTimeout(() => {
+                    setErrorMessage('');
+                  }, 4000);
+            }
+            else{
+                console.error("error:", error);
+            }
         });
 
         //navigation.navigate("SignIn");
@@ -93,6 +103,7 @@ const SignInScreens = () => {
                     rules = {{required: 'Password field must not be empty.'}}>
                 </CustomInput>
             </View>
+            {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
             <View style={styles.buttonWrapper}>
                 <CustomBigButton currentText={"Log in"} onPress={handleSubmit(onSignInPress)}></CustomBigButton>
                 <CustomSmallButton currentText={"Sign Up"} onPress={onSignUpPress}></CustomSmallButton>
@@ -103,6 +114,11 @@ const SignInScreens = () => {
 
 const styles = StyleSheet.create (
     {
+        errorMessage: {
+            color: 'red',
+            marginTop: 10,
+          },
+
         logo: {
             width: 100,
             maxHeight: 100,

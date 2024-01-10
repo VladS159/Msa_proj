@@ -12,7 +12,7 @@ import CustomTabs from "../../components/CustomTabs/CustomTabs";
 import { useIsFocused } from '@react-navigation/native';
 import { PieChart } from 'react-native-chart-kit';
 import Monkey from '../../../assets/images/monkey.png';
-import Gorilla from '../../../assets/images/Gorilla.png';
+import Gorilla from '../../../assets/images/gorilla.png';
 import KingKong from '../../../assets/images/kingkong.png';
 import Done from '../../../assets/images/done.png'
 
@@ -38,7 +38,7 @@ const HomeScreens = () => {
         try{
             const userId = await AsyncStorage.getItem('userId');
             
-            const myUrl = "http://localhost:3000/users/" + userId + "/tasks";
+            const myUrl = "http://192.168.1.3:3000/users/" + userId + "/tasks";
             console.log("this is my url: "+myUrl);
 
             const response = await axios.get(myUrl);
@@ -60,7 +60,7 @@ const HomeScreens = () => {
         try{
             const userId = await AsyncStorage.getItem('userId');
             
-            const myUrl = "http://localhost:3000/users/" + userId;
+            const myUrl = "http://192.168.1.3:3000/users/" + userId;
             console.log("this is my url here: "+myUrl);
 
             const response = await axios.get(myUrl);
@@ -85,7 +85,7 @@ const HomeScreens = () => {
         try{
             const userId = await AsyncStorage.getItem('userId');
             
-            const myUrl = "http://localhost:3000/users/" + userId + "/deleteCurrentInfo";
+            const myUrl = "http://192.168.1.3:3000/users/" + userId + "/deleteCurrentInfo";
             console.log("this is my url here: "+myUrl);
 
             const response = await axios.patch(myUrl);
@@ -123,17 +123,14 @@ const HomeScreens = () => {
     ];
 
     const returnMonkeyImage = () => {
-        // Assuming you have kingkong image source
         return <Image source={Monkey} style={[styles.logo, { height: height * 0.3 }]} resizeMode={'contain'} />;
     };
 
     const returnGorillaImage = () => {
-        // Assuming you have kingkong image source
         return <Image source={Gorilla} style={[styles.logo, { height: height * 0.3 }]} resizeMode={'contain'} />;
     };
 
     const returnKingKongImage = () => {
-        // Assuming you have kingkong image source
         return <Image source={KingKong} style={[styles.logo, { height: height * 0.3 }]} resizeMode={'contain'} />;
     };
     

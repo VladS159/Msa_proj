@@ -31,7 +31,7 @@ const HomeScreens = () => {
         try{
             const userId = await AsyncStorage.getItem('userId');
             
-            const myUrl = "http://localhost:3000/users/" + userId + "/tasks";
+            const myUrl = "http://192.168.1.3:3000/users/" + userId + "/tasks";
             console.log("this is my url: "+myUrl);
             
             //console.log("log1");
@@ -64,14 +64,14 @@ const HomeScreens = () => {
 
             const userId = await AsyncStorage.getItem('userId');
             //setMarked(true);
-            const myUrl = "http://localhost:3000/tasks/" + taskId + "/delete";
-            const myUrl2 = "http://localhost:3000/users/" + userId + "/removeTask/" + taskId;
+            const myUrl = "http://192.168.1.3:3000/tasks/" + taskId + "/delete";
+            const myUrl2 = "http://192.168.1.3:3000/users/" + userId + "/removeTask/" + taskId;
 
             console.log("this is my url: "+myUrl);
             console.log("this is my url2: "+myUrl2);
 
             if(flag){
-                const myUrl3 = "http://localhost:3000/users/" + userId + "/addBananas/" + taskId;
+                const myUrl3 = "http://192.168.1.3:3000/users/" + userId + "/addBananas/" + taskId;
                 console.log("this is my url2: "+myUrl3);
 
                 const bananaResponse = await axios.patch(myUrl3);

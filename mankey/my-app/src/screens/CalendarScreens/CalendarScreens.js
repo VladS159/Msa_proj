@@ -33,7 +33,7 @@ const CalendarScreens = () => {
         try{
             const userId = await AsyncStorage.getItem('userId');
 
-            const myUrl = "http://localhost:3000/users/" + userId + "/tasks";
+            const myUrl = "http://192.168.1.3:3000/users/" + userId + "/tasks";
             console.log("this is my url: "+myUrl);
 
             //console.log("log1");
@@ -65,7 +65,7 @@ const CalendarScreens = () => {
         try{
             setMarked(true);
 
-            const myUrl = "http://localhost:3000/tasks/" + taskId + "/complete";
+            const myUrl = "http://192.168.1.3:3000/tasks/" + taskId + "/complete";
             console.log("this is my url: "+myUrl);
 
             const response = await axios.patch(myUrl)
