@@ -1,20 +1,15 @@
 import React, {useState, useEffect} from 'react'
-import {View, Text, Image, StyleSheet, useWindowDimensions, TextInput, ScrollView, Pressable} from 'react-native'
-import Banana from '../../../assets/images/Banana.jpg'
-import CustomInput from "../../components/CustomInput";
-import CustomBigButton from "../../components/CustomBigButton";
-import CustomSmallButton from "../../components/CustomSmallButton/CustomSmallButton";
-import {TabRouter, useNavigation} from "@react-navigation/native";
-import {useForm, Controller} from 'react-hook-form';
+import {View, StyleSheet, ScrollView} from 'react-native'
+import {useNavigation} from "@react-navigation/native";
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomTabs from "../../components/CustomTabs/CustomTabs";
 import CustomTask from "../../components/CustomTask";
 import { useIsFocused } from '@react-navigation/native';
+import CustomTitle from "../../components/CustomTitle";
 
 const HomeScreens = () => {
 
-    const navigation = useNavigation();
     const isFocused = useIsFocused();
     const [tasks, setTasks] = useState([]);
     const [inProgressTasks, setInProgressTasks] = useState([]);
@@ -31,7 +26,7 @@ const HomeScreens = () => {
         try{
             const userId = await AsyncStorage.getItem('userId');
             
-            const myUrl = "http://192.168.1.3:3000/users/" + userId + "/tasks";
+            const myUrl = "http://192.168.0.101:3000/users/" + userId + "/tasks";
             console.log("this is my url: "+myUrl);
             
             //console.log("log1");
@@ -64,14 +59,14 @@ const HomeScreens = () => {
 
             const userId = await AsyncStorage.getItem('userId');
             //setMarked(true);
-            const myUrl = "http://192.168.1.3:3000/tasks/" + taskId + "/delete";
-            const myUrl2 = "http://192.168.1.3:3000/users/" + userId + "/removeTask/" + taskId;
+            const myUrl = "http://192.168.0.101:3000/tasks/" + taskId + "/delete";
+            const myUrl2 = "http://192.168.0.101:3000/users/" + userId + "/removeTask/" + taskId;
 
             console.log("this is my url: "+myUrl);
             console.log("this is my url2: "+myUrl2);
 
             if(flag){
-                const myUrl3 = "http://192.168.1.3:3000/users/" + userId + "/addBananas/" + taskId;
+                const myUrl3 = "http://192.168.0.101:3000/users/" + userId + "/addBananas/" + taskId;
                 console.log("this is my url2: "+myUrl3);
 
                 const bananaResponse = await axios.patch(myUrl3);
@@ -92,14 +87,14 @@ const HomeScreens = () => {
 
     return (
         <View style={styles.root}>
-            <Text>Home sweet home</Text>
-            <ScrollView style={styles.scroll}>
+            <CustomTitle titleText="Home"></CustomTitle>
+            <ScrollView contentContainerStyle={styles.contentContainer} style={styles.scroll}>
             {inProgressTasks.map((task) => (
-                <CustomTask key={task._id} taskName={task.addTask} taskDate={task.date} onComplete={() => {
+                <CustomTask key={task._id} taskName={task.addTask} taskDate={task.date} controlButtons={true} onComplete={() => {
                     markTaskAsCompleted(task._id, true)}} onDelete={() => {markTaskAsCompleted(task._id, false)}}></CustomTask>
             ))}
             </ScrollView>
-            <CustomTabs></CustomTabs>
+            <CustomTabs currentFocusedTab="0"></CustomTabs>
         </View>
     );
     };
@@ -114,6 +109,10 @@ const styles = StyleSheet.create (
     scroll: {
         maxHeight: "75%",
         width: "100%",
+    },
+    contentContainer: {
+        display: "flex",
+        alignItems: 'center',
     },
     root: {
         flex: 1,

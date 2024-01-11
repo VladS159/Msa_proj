@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useRef, useCallback} from 'react'
 import {View, Text, Image, StyleSheet, useWindowDimensions, TextInput} from 'react-native'
 import Banana from '../../../assets/images/Banana.jpg'
 import CustomInput from "../../components/CustomInput";
@@ -12,6 +12,9 @@ import CustomTabs from "../../components/CustomTabs/CustomTabs";
 import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
 import HomeScreens from '../HomeScreens/HomeScreens';
+import {useFonts} from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import CustomTitle from "../../components/CustomTitle";
 
 const AddTaskScreens = () => {
 
@@ -22,6 +25,19 @@ const AddTaskScreens = () => {
         noOfBananas: "",
         date: dayjs(Date()).format("YYYY-MM-DD"),
     }});
+
+    let [fontsLoaded] = useFonts({
+        'DM Serif Display': require('../../assets/fonts/DMSerifDisplay-Regular.ttf'),
+    });
+    const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded) {
+            await SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded]);
+
+    if (!fontsLoaded) {
+        return null;
+    }
     
     const addTask = async (data, userId) => {
         try{
@@ -37,7 +53,7 @@ const AddTaskScreens = () => {
 
         const userId = await AsyncStorage.getItem("userId");
         console.log(userId);
-        const myUrl = "http://192.168.1.3:3000/tasks/"+userId;
+        const myUrl = "http://192.168.0.101:3000/tasks/"+userId;
 
         axios.post(myUrl, task).then((response) => {
             console.log(response);
@@ -55,7 +71,7 @@ const AddTaskScreens = () => {
 
 return (
     <View style={styles.root}>
-        <Text>Adding Task</Text>
+        <CustomTitle titleText="Adding Task"></CustomTitle>
         <CustomInput
             //onChangeText={onChange}
             //onBlur={onBlur}
@@ -114,6 +130,10 @@ return (
                             dayContainerStyle={{backgroundColor: '#9EB384'}}
                             mode='date'
                             selectedItemColor='#435334'
+                            calendarTextStyle={{fontFamily: 'DM Serif Display'}}
+                            selectedTextStyle={{fontFamily: 'DM Serif Display'}}
+                            headerTextStyle={{fontFamily: 'DM Serif Display'}}
+                            weekDaysTextStyle={{fontFamily: 'DM Serif Display'}}
                             todayContainerStyle={{backgroundColor: '#9EB384'}}
                             monthContainerStyle={{backgroundColor: '#9EB384'}}
                         />
@@ -130,7 +150,7 @@ return (
             <CustomBigButton currentText={"Add Task"} onPress={handleSubmit(addTask)}></CustomBigButton>
         </View>
 
-        <CustomTabs></CustomTabs>
+        <CustomTabs currentFocusedTab="1"></CustomTabs>
     </View>
 );
 };

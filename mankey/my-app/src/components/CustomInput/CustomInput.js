@@ -1,11 +1,26 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import {View, Text, Image, StyleSheet, useWindowDimensions, TextInput} from 'react-native'
 import {Controller} from 'react-hook-form'
+import {useFonts} from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 
 
 const CustomInput = ({control, name, rules = {}, placeholder, secureTextEntry}) => {
 
     const {height} = useWindowDimensions();
+
+    let [fontsLoaded] = useFonts({
+        'DM Serif Display': require('../../assets/fonts/DMSerifDisplay-Regular.ttf'),
+    });
+    const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded) {
+            await SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded]);
+
+    if (!fontsLoaded) {
+        return null;
+    }
 
     return (
         <Controller
@@ -52,6 +67,7 @@ const styles = StyleSheet.create (
             paddingRight: 0,
             color: '#9EB384',
             textAlign: 'center',
+            fontFamily: 'DM Serif Display',
         },
         
     }

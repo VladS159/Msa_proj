@@ -46,7 +46,7 @@ const SignInScreens = () => {
                 password:data.password
             }
 
-            axios.post("http://192.168.1.3:3000/SignIn", user).then((response) => {
+            axios.post("http://192.168.0.101:3000/SignIn", user).then((response) => {
                 const {userId, token} = response.data;
                 // const { userId, token } = response.data;
                 

@@ -1,10 +1,25 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import {View, Text, Image, StyleSheet, useWindowDimensions, TextInput, Pressable} from 'react-native'
+import {useFonts} from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 
 
 const CustomSmallButton = ({currentText, onPress}) => {
 
     const {height} = useWindowDimensions();
+
+    let [fontsLoaded] = useFonts({
+        'DM Serif Display': require('../../assets/fonts/DMSerifDisplay-Regular.ttf'),
+    });
+    const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded) {
+            await SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded]);
+
+    if (!fontsLoaded) {
+        return null;
+    }
 
     return (
         <Pressable style={styles.container} onPress={onPress}>
@@ -31,6 +46,7 @@ const styles = StyleSheet.create (
         },
         text: {
             color: '#1E1E1E',
+            fontFamily: 'DM Serif Display',
         },
     }
 )

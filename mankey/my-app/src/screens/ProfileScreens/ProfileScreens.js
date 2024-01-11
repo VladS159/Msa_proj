@@ -15,6 +15,7 @@ import Monkey from '../../../assets/images/monkey.png';
 import Gorilla from '../../../assets/images/gorilla.png';
 import KingKong from '../../../assets/images/kingkong.png';
 import Done from '../../../assets/images/done.png'
+import CustomTitle from "../../components/CustomTitle";
 
 const HomeScreens = () => {
 
@@ -38,7 +39,7 @@ const HomeScreens = () => {
         try{
             const userId = await AsyncStorage.getItem('userId');
             
-            const myUrl = "http://192.168.1.3:3000/users/" + userId + "/tasks";
+            const myUrl = "http://192.168.0.101:3000/users/" + userId + "/tasks";
             console.log("this is my url: "+myUrl);
 
             const response = await axios.get(myUrl);
@@ -60,7 +61,7 @@ const HomeScreens = () => {
         try{
             const userId = await AsyncStorage.getItem('userId');
             
-            const myUrl = "http://192.168.1.3:3000/users/" + userId;
+            const myUrl = "http://192.168.0.101:3000/users/" + userId;
             console.log("this is my url here: "+myUrl);
 
             const response = await axios.get(myUrl);
@@ -85,7 +86,7 @@ const HomeScreens = () => {
         try{
             const userId = await AsyncStorage.getItem('userId');
             
-            const myUrl = "http://192.168.1.3:3000/users/" + userId + "/deleteCurrentInfo";
+            const myUrl = "http://192.168.0.101:3000/users/" + userId + "/deleteCurrentInfo";
             console.log("this is my url here: "+myUrl);
 
             const response = await axios.patch(myUrl);
@@ -107,17 +108,17 @@ const HomeScreens = () => {
 
     const pieChartData = [
         {
-            name: 'Completed',
+            name: 'Complete',
             population: parseInt(completedTasks, 10) || 0,
-            color: 'green',
-            legendFontColor: '#7F7F7F',
+            color: '#F5A800',
+            legendFontColor: 'black',
             legendFontSize: 15,
         },
         {
             name: 'Remaining',
             population: parseInt(inProgressTasks.length, 10) || 0,
-            color: 'red',
-            legendFontColor: '#7F7F7F',
+            color: '#435334',
+            legendFontColor: 'black',
             legendFontSize: 15,
         },
     ];
@@ -154,32 +155,34 @@ const HomeScreens = () => {
 
 return (
     <View style={styles.root}>
-        <Text style={{fontFamily: 'DM Serif Display Regular'}}>My profile</Text>
+        <CustomTitle titleText="Your Profile"></CustomTitle>
         {ChooseImage(noOfBananas)}
-        <Text>Remaining tasks: {inProgressTasks.length}</Text>
-        <Text>Completed tasks: {completedTasks}</Text>
+        <Text style={{fontFamily: 'DM Serif Display'}}>Remaining tasks: {inProgressTasks.length}</Text>
+        <Text style={{fontFamily: 'DM Serif Display'}}>Completed tasks: {completedTasks}</Text>
         {(!isPieChartInvisible) ? (
             <PieChart
             data={pieChartData}
-            width={300}
+            width={350}
             height={200}
             chartConfig={{
-                backgroundGradientFrom: '#1E2923',
+                backgroundGradientFrom: 'purple',
                 backgroundGradientTo: '#08130D',
                 color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
             }}
             accessor="population"
             backgroundColor="transparent"
             paddingLeft="15"
+            style={styles.chart}
         />
         ) : (
             <Image source={Done} style={[styles.logo, { height: height * 0.3 }]} resizeMode={'contain'} />
         )}
-        <CustomSmallButton currentText={"Delete current information"} onPress={deleteCurrentInformation}></CustomSmallButton>
+
         <View style={styles.buttonWrapper}>
             <CustomBigButton currentText={"Log out"} onPress={onLogOutPress}></CustomBigButton>
+            <CustomSmallButton currentText={"Delete current information"} onPress={deleteCurrentInformation}></CustomSmallButton>
         </View>
-        <CustomTabs></CustomTabs>
+        <CustomTabs currentFocusedTab="3"></CustomTabs>
     </View>
 );
 };

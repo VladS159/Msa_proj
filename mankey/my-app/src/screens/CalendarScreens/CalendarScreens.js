@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useRef, useCallback} from 'react'
 import {View, Text, Image, StyleSheet, useWindowDimensions, TextInput, ScrollView} from 'react-native'
 import {TabRouter, useIsFocused, useNavigation} from "@react-navigation/native";
 import {useForm, Controller} from 'react-hook-form';
@@ -8,6 +8,9 @@ import CustomTabs from "../../components/CustomTabs/CustomTabs";
 import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
 import CustomTask from "../../components/CustomTask";
+import {useFonts} from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import CustomTitle from "../../components/CustomTitle";
 
 const CalendarScreens = () => {
 
@@ -33,7 +36,7 @@ const CalendarScreens = () => {
         try{
             const userId = await AsyncStorage.getItem('userId');
 
-            const myUrl = "http://192.168.1.3:3000/users/" + userId + "/tasks";
+            const myUrl = "http://192.168.0.101:3000/users/" + userId + "/tasks";
             console.log("this is my url: "+myUrl);
 
             //console.log("log1");
@@ -65,7 +68,7 @@ const CalendarScreens = () => {
         try{
             setMarked(true);
 
-            const myUrl = "http://192.168.1.3:3000/tasks/" + taskId + "/complete";
+            const myUrl = "http://192.168.0.101:3000/tasks/" + taskId + "/complete";
             console.log("this is my url: "+myUrl);
 
             const response = await axios.patch(myUrl)
@@ -80,9 +83,22 @@ const CalendarScreens = () => {
     console.log("inProgress", inProgressTasks);
 
 
+    let [fontsLoaded] = useFonts({
+        'DM Serif Display': require('../../assets/fonts/DMSerifDisplay-Regular.ttf'),
+    });
+    const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded) {
+            await SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded]);
+
+    if (!fontsLoaded) {
+        return null;
+    }
+
     return (
     <View style={styles.root}>
-        <Text>Calendar</Text>
+        <CustomTitle titleText="Choose a date:"></CustomTitle>
         <Controller
             control = {control}
             name = "date"
@@ -102,6 +118,12 @@ const CalendarScreens = () => {
                             dayContainerStyle={{backgroundColor: '#9EB384'}}
                             todayContainerStyle={{backgroundColor: '#9EB384'}}
                             monthContainerStyle={{backgroundColor: '#9EB384'}}
+                            calendarTextStyle={{fontFamily: 'DM Serif Display'}}
+                            selectedTextStyle={{fontFamily: 'DM Serif Display'}}
+                            headerTextStyle={{fontFamily: 'DM Serif Display'}}
+                            weekDaysTextStyle={{fontFamily: 'DM Serif Display'}}
+                            todayContainerStyle={{backgroundColor: '#9EB384'}}
+                            monthContainerStyle={{backgroundColor: '#9EB384'}}
                             selectedItemColor='#435334'
                             mode='date'
                         />
@@ -114,16 +136,16 @@ const CalendarScreens = () => {
         >
         </Controller>
 
-        <Text>The Day's Tasks:</Text>
+        <CustomTitle titleText="The Day's Tasks:"></CustomTitle>
 
-        <ScrollView style={styles.scroll}>
+        <ScrollView contentContainerStyle={styles.contentContainer} style={styles.scroll}>
             {inProgressTasks.map((task) => (
-                <CustomTask key={task._id} taskName={task.addTask} taskDate={task.date} onComplete={() => {
+                <CustomTask key={task._id} taskName={task.addTask} taskDate={task.date} controlButtons={false} onComplete={() => {
                     markTaskAsCompleted(task._id)}} onDelete={markTaskAsCompleted}></CustomTask>
             ))}
         </ScrollView>
 
-        <CustomTabs></CustomTabs>
+        <CustomTabs currentFocusedTab="2"></CustomTabs>
     </View>
 );
 };
@@ -134,6 +156,10 @@ const styles = StyleSheet.create (
         width: 100,
         maxHeight: 100,
         maxWidth: 300,
+    },
+    contentContainer: {
+        display: "flex",
+        alignItems: 'center',
     },
     scroll: {
         maxHeight: "75%",
